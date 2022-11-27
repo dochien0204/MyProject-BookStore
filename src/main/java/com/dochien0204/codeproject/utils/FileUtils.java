@@ -25,6 +25,6 @@ public class FileUtils {
       output.write(multipartFile.getBytes());
     }
 
-    return fileImage.toString();
+    return imagePath.resolve(multipartFile.getOriginalFilename()).toString();
   }
 }

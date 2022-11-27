@@ -1,9 +1,12 @@
 package com.dochien0204.codeproject.dtos.user;
 
+import com.dochien0204.codeproject.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,4 +31,6 @@ public class GetListUserItemDTO {
   private String fullName;
 
   private String avatar;
+
+  private List<Role> roles;
 }

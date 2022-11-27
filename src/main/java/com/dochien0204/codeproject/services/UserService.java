@@ -1,9 +1,11 @@
 package com.dochien0204.codeproject.services;
 
+import com.dochien0204.codeproject.dtos.user.CreateUserDTO;
+import com.dochien0204.codeproject.dtos.user.UpdateUserDTO;
 import com.dochien0204.codeproject.entities.User;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
@@ -16,4 +18,11 @@ public interface UserService {
   User findUserByEmail(String email);
 
   List<User> findUserBySubName(String subName);
+
+  boolean save(CreateUserDTO userDTO) throws IOException;
+
+  boolean update(UpdateUserDTO userDTO, Integer userId) throws IOException;
+
+  boolean delete(Integer userId);
+
 }

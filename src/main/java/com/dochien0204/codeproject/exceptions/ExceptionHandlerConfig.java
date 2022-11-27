@@ -14,4 +14,9 @@ public class ExceptionHandlerConfig {
   public ResponseEntity<RestData<?>>  handleNotFoundException(NotFoundException ex) {
     return VsResponseUtil.error(HttpStatus.NOT_FOUND, ex.getUserMessage());
   }
+
+  @ExceptionHandler(value = BadRequestException.class)
+  public ResponseEntity<RestData<?>> handleBadRequestException(BadRequestException ex) {
+    return VsResponseUtil.error(HttpStatus.BAD_REQUEST, ex.getMessage());
+  }
 }
