@@ -39,7 +39,7 @@ public class RefreshTokenImpl implements RefreshTokenService {
       }
       String access_token = JWT.create()
           .withSubject(userName)
-          .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 12 * 60 * 1000))
+          .withExpiresAt(new Date(System.currentTimeMillis() + 10  * 60 * 1000))
           .withClaim("roles", user.getRoles().stream().map(Role::getRoleName).collect(Collectors.toList()))
           .sign(algorithm);
       return new RefreshTokenResponse(access_token, refresh_token);

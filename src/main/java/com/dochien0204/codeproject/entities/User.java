@@ -41,6 +41,12 @@ public class User extends AbstractAuditingEntity {
 
   private String avatar;
 
+  private Integer failedAttempts;
+
+  private Boolean accountNonLocked;
+
+  private Long lockTime;
+
   @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<CartItem> cartItems;
 

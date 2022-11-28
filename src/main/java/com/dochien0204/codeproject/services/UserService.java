@@ -25,4 +25,10 @@ public interface UserService {
 
   boolean delete(Integer userId);
 
+  void incrementFailedAttempts(User user);
+
+  void lockedUser(User user);
+
+  void unlockUser(User user);
+
 }

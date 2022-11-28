@@ -1,10 +1,17 @@
 package com.dochien0204.codeproject.utils;
 
-import com.dochien0204.codeproject.entities.User;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecurityUtils {
-  public static User getPrincipal() {
-    return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  public static String getPrincipal() {
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof UserDetails) {
+      String userName = ((UserDetails) principal).getUsername();
+      return userName;
+    } else {
+      String userName = principal.toString();
+      return userName;
+    }
   }
 }

@@ -8,7 +8,9 @@ import com.dochien0204.codeproject.repositories.RoleRepository;
 import com.dochien0204.codeproject.repositories.UserRepository;
 import com.dochien0204.codeproject.services.UserService;
 import com.dochien0204.codeproject.utils.FileUtils;
+import com.dochien0204.codeproject.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,14 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
   private final RoleRepository roleRepository;
   private final UserRepository userRepository;
   private final ModelMapper modelMapper;
   private final PasswordEncoder passwordEncoder;
+  public static final Long LOCK_TIME_DURATION = Long.valueOf(10 * 60 * 1000);
 
   @Override
   public List<User> findAllUser() {
@@ -45,11 +49,8 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findUserByUserName(String userName) {
-    Optional<User> user = Optional.ofNullable(userRepository.findByUserName(userName));
-    if (user.isEmpty()) {
-      throw new NotFoundException("Not found user have user name: " + userName);
-    }
-    return user.get();
+    User user = userRepository.findByUserName(userName);
+    return user;
   }
 
   @Override
@@ -79,6 +80,10 @@ public class UserServiceImpl implements UserService {
     user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
     user.setRoles(roleRepository.findByRoleName("ROLE_USER"));
     user.setAvatar(FileUtils.uploadFile(userDTO.getFile()));
+    user.setCreatedBy(user.getUserName());
+    user.setLockTime(Long.valueOf(0));
+    user.setAccountNonLocked(true);
+    user.setFailedAttempts(0);
     userRepository.save(user);
     return true;
   }
@@ -91,6 +96,7 @@ public class UserServiceImpl implements UserService {
     }
     user.get().setPassword(passwordEncoder.encode(userDTO.getPassword()));
     user.get().setAvatar(FileUtils.uploadFile(userDTO.getFile()));
+    user.get().setLastModifiedBy(SecurityUtils.getPrincipal());
     userRepository.save(user.get());
     return true;
   }
@@ -103,6 +109,22 @@ public class UserServiceImpl implements UserService {
     }
     userRepository.delete(user.get());
     return true;
+  }
+
+  @Override
+  public void incrementFailedAttempts(User user) {
+    int newFailedAttempts = user.getFailedAttempts() + 1;
+    userRepository.updateFailedAttempts(newFailedAttempts, user.getUserName());
+  }
+
+  @Override
+  public void lockedUser(User user) {
+    userRepository.lockedUser(user.getUserName(), System.currentTimeMillis() + LOCK_TIME_DURATION);
+  }
+
+  @Override
+  public void unlockUser(User user) {
+    userRepository.unlockUser(user.getUserName());
   }
 
   public boolean checkExistsUser(String userName) {

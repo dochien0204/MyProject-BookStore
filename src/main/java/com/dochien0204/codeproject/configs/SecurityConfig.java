@@ -1,6 +1,5 @@
 package com.dochien0204.codeproject.configs;
 
-import com.dochien0204.codeproject.contants.UrlConstant;
 import com.dochien0204.codeproject.filters.CustomAuthenticationFilter;
 import com.dochien0204.codeproject.filters.CustomAuthorizationFilter;
 import com.dochien0204.codeproject.services.Impl.MyUserDetailsService;
@@ -38,9 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
     customAuthenticationFilter.setFilterProcessesUrl("/api/v1/book-store/login");
-    http.csrf().disable();
-    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    http.authorizeRequests().anyRequest().permitAll();
+    http.csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .authorizeRequests().anyRequest().permitAll();
     http.addFilter(customAuthenticationFilter);
     http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
   }
@@ -50,4 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public AuthenticationManager authenticationManagerBean() throws Exception {
     return super.authenticationManagerBean();
   }
+
 }
+
+
