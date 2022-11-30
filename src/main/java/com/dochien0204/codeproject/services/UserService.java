@@ -1,6 +1,7 @@
 package com.dochien0204.codeproject.services;
 
 import com.dochien0204.codeproject.dtos.user.CreateUserDTO;
+import com.dochien0204.codeproject.dtos.user.UpdateNewPasswordDTO;
 import com.dochien0204.codeproject.dtos.user.UpdateUserDTO;
 import com.dochien0204.codeproject.entities.User;
 
@@ -30,5 +31,11 @@ public interface UserService {
   void lockedUser(User user);
 
   void unlockUser(User user);
+
+  String forgotPassword(String email);
+
+  Integer confirmResetToken(String email, String token);
+
+  boolean updateNewPassword(Integer userId, UpdateNewPasswordDTO updateNewPasswordDTO);
 
 }

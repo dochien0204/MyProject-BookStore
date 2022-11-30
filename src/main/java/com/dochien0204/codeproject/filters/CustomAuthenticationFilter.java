@@ -17,7 +17,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -73,7 +72,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             error.put("error_message", "Password is not valid, you have " + (enteredTimes - 1) + " times entering");
           }
         }
-      } else if(user.getLockTime() < System.currentTimeMillis() && !user.getAccountNonLocked()){
+      } else if (user.getLockTime() < System.currentTimeMillis() && !user.getAccountNonLocked()) {
         userService.unlockUser(user);
         error.put("error_message", "Account is unlocked ! Try to again");
       } else if (user.getLockTime() > System.currentTimeMillis() && !user.getAccountNonLocked()) {
@@ -95,7 +94,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     com.dochien0204.codeproject.entities.User current = userService.findUserByUserName(user.getUsername());
 
     System.out.println(current.getLockTime() - System.currentTimeMillis());
-    if(!current.getAccountNonLocked() && (System.currentTimeMillis() < current.getLockTime())) {
+    if (!current.getAccountNonLocked() && (System.currentTimeMillis() < current.getLockTime())) {
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       Map<String, String> error = new HashMap<>();
       error.put("error_message", "Account is locked until " + DateUtils.toDate(current.getLockTime()));

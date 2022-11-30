@@ -17,5 +17,17 @@ public class UrlConstant {
     public static final String UPDATE = PREFIX + "/{userId}" + "/update";
     public static final String DELETE = PREFIX + "/{userId}/delete";
     public static final String REFRESH_TOKEN = PREFIX + "/refresh-token";
+
+    public static final String FORGOT_PASSWORD = PREFIX + "/{email}/forgot";
+
+    public static final String CONFIRM_TOKEN = PREFIX + "/{email}/confirm";
+
+    public static final String UPDATE_NEW_PASSWORD = PREFIX + "/{userId}/new-password";
+  }
+
+  public static final class Email {
+    public static final String PREFIX = "/email";
+    public static final String SEND_SIMPLE_TO_ALL = PREFIX + "/send-all";
+    public static final String SEND_SIMPLE_TO_ONE = PREFIX + "/send";
   }
 }

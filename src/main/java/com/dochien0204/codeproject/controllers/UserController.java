@@ -90,14 +90,34 @@ public class UserController {
   @PutMapping(UrlConstant.User.UPDATE)
   public ResponseEntity<?> updateUserByUserName(@ModelAttribute UpdateUserDTO userDTO,
                                                 @PathVariable(name = "userId") Integer userId) throws IOException {
-    UpdateUserResponse output = userService.update(userDTO , userId) ? new UpdateUserResponse("Updated sucessfully") : new UpdateUserResponse("Update failed because user isn't exists");
+    UpdateUserResponse output = userService.update(userDTO, userId) ? new UpdateUserResponse("Updated sucessfully") : new UpdateUserResponse("Update failed because user isn't exists");
     return VsResponseUtil.ok(output);
   }
 
   @PreAuthorize("hasRole('ROLE_ADMIN')")
-  @DeleteMapping (UrlConstant.User.DELETE)
+  @DeleteMapping(UrlConstant.User.DELETE)
   public ResponseEntity<?> deleteUserById(@PathVariable(name = "userId") Integer userId) {
     DeleteUserResponse output = userService.delete(userId) ? new DeleteUserResponse("Deleted Successfully") : new DeleteUserResponse("Deleted Failed because user isn't exists");
+    return VsResponseUtil.ok(output);
+  }
+
+  @PostMapping(UrlConstant.User.FORGOT_PASSWORD)
+  public ResponseEntity<?> forgotPassword(@PathVariable(name = "email") String email) {
+    String output = userService.forgotPassword(email);
+    return VsResponseUtil.ok(output);
+  }
+
+  @PostMapping(UrlConstant.User.CONFIRM_TOKEN)
+  public ResponseEntity<?> confirmPassword(@PathVariable(name = "email") String email,
+                                           @RequestParam(name = "token") String token) {
+    Integer output = userService.confirmResetToken(email, token);
+    return VsResponseUtil.ok(output);
+  }
+
+  @PostMapping(UrlConstant.User.UPDATE_NEW_PASSWORD)
+  public ResponseEntity<?> updateNewPassword(@PathVariable(name = "userId") Integer userId,
+                                             @RequestBody UpdateNewPasswordDTO updateNewPasswordDTO) {
+    UpdateUserResponse output = userService.updateNewPassword(userId, updateNewPasswordDTO) ? new UpdateUserResponse("Password is changed successfully") : new UpdateUserResponse("Changed failed");
     return VsResponseUtil.ok(output);
   }
 
