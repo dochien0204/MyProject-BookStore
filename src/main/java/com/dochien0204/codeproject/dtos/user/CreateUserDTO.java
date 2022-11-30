@@ -26,6 +26,7 @@ public class CreateUserDTO {
   @Nationalized
   private String address;
 
+  @NotBlank(message = "Email is required")
   private String email;
 
   private String phone;

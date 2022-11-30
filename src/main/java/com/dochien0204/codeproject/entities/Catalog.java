@@ -24,6 +24,8 @@ public class Catalog extends AbstractAuditingEntity {
 
   private String catalogName;
 
-  @OneToMany(mappedBy = "catalog")
+  private String catalogImage;
+
+  @OneToMany(mappedBy = "catalog", fetch = FetchType.EAGER)
   private List<Book> books;
 }

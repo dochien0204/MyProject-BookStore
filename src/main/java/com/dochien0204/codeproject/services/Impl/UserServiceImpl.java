@@ -117,8 +117,18 @@ public class UserServiceImpl implements UserService {
     if (user.isEmpty()) {
       throw new NotFoundException("Not found user " + userId);
     }
-    user.get().setPassword(passwordEncoder.encode(userDTO.getPassword()));
-    user.get().setAvatar(FileUtils.uploadFile(userDTO.getFile()));
+    if(userDTO.getPassword() != null) {
+      user.get().setPassword(passwordEncoder.encode(userDTO.getPassword()));
+    }
+    user.get().setAddress(userDTO.getAddress());
+    user.get().setEmail(userDTO.getEmail());
+    user.get().setPhone(userDTO.getPhone());
+    user.get().setAge(userDTO.getAge());
+    user.get().setFullName(userDTO.getFullName());
+    if(userDTO.getFile() != null) {
+      user.get().setAvatar(FileUtils.uploadFile(userDTO.getFile()));
+    }
+    user.get().setLastModifiedDate(System.currentTimeMillis());
     user.get().setLastModifiedBy(SecurityUtils.getPrincipal());
     userRepository.save(user.get());
     return true;

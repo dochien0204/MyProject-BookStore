@@ -8,12 +8,14 @@ import com.dochien0204.codeproject.services.MailService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class MailServiceImpl implements MailService {
 
   private final JavaMailSender mailSender;

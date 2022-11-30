@@ -7,8 +7,10 @@ import com.dochien0204.codeproject.repositories.UserRepository;
 import com.dochien0204.codeproject.services.PasswordResetTokenService;
 import com.dochien0204.codeproject.utils.RandomStringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class PasswordResetTokenImpl implements PasswordResetTokenService {
 
   private static final long RESET_TOKEN_EXPIRED = 2 * 60 * 1000;

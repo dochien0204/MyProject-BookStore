@@ -12,6 +12,7 @@ import com.dochien0204.codeproject.repositories.UserRepository;
 import com.dochien0204.codeproject.services.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RefreshTokenImpl implements RefreshTokenService {
 

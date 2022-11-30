@@ -1,4 +1,4 @@
-package com.dochien0204.codeproject.dtos.user;
+package com.dochien0204.codeproject.dtos.catalog;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,29 +7,18 @@ import lombok.Setter;
 import org.hibernate.annotations.Nationalized;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateUserDTO {
-
-  private String password;
+public class CreateNewCatalogDTO {
 
   @Nationalized
-  private String address;
+  @NotBlank(message = "Catalog Name is required")
+  private String catalogName;
 
-  private String email;
-
-  private String phone;
-
-  private Integer age;
-
-  @Nationalized
-  private String fullName;
-
+  @NotBlank(message = "Catalog Image is required")
   private MultipartFile file;
 }

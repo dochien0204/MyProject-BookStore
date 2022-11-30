@@ -39,7 +39,7 @@ public class Book extends AbstractAuditingEntity {
   @OneToMany(mappedBy = "book")
   private List<CartItem> cartItems;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "catalog_id")
   private Catalog catalog;
 }

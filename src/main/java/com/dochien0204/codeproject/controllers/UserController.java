@@ -90,7 +90,7 @@ public class UserController {
   @PutMapping(UrlConstant.User.UPDATE)
   public ResponseEntity<?> updateUserByUserName(@ModelAttribute UpdateUserDTO userDTO,
                                                 @PathVariable(name = "userId") Integer userId) throws IOException {
-    UpdateUserResponse output = userService.update(userDTO, userId) ? new UpdateUserResponse("Updated sucessfully") : new UpdateUserResponse("Update failed because user isn't exists");
+    UpdateUserResponse output = userService.update(userDTO, userId) ? new UpdateUserResponse("Updated successfully") : new UpdateUserResponse("Update failed because user isn't exists");
     return VsResponseUtil.ok(output);
   }
 
@@ -114,11 +114,12 @@ public class UserController {
     return VsResponseUtil.ok(output);
   }
 
-  @PostMapping(UrlConstant.User.UPDATE_NEW_PASSWORD)
+  @PutMapping(UrlConstant.User.UPDATE_NEW_PASSWORD)
   public ResponseEntity<?> updateNewPassword(@PathVariable(name = "userId") Integer userId,
                                              @RequestBody UpdateNewPasswordDTO updateNewPasswordDTO) {
     UpdateUserResponse output = userService.updateNewPassword(userId, updateNewPasswordDTO) ? new UpdateUserResponse("Password is changed successfully") : new UpdateUserResponse("Changed failed");
     return VsResponseUtil.ok(output);
   }
+
 
 }
