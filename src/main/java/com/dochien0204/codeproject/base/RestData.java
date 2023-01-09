@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.base;
 
+import com.dochien0204.codeproject.entities.Pagination;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class RestData<T> {
@@ -16,6 +17,9 @@ public class RestData<T> {
   private T data;
 
   @JsonInclude(JsonInclude.Include.NON_NULL)
+  private Pagination pagination;
+
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   private Long timeStamp;
 
   public RestData() {
@@ -25,6 +29,12 @@ public class RestData<T> {
   public RestData(T data) {
     this.status = RestStatus.SUCCESS;
     this.data = data;
+  }
+
+  public RestData(T data, Pagination pagination) {
+    this.status = RestStatus.SUCCESS;
+    this.data = data;
+    this.pagination = pagination;
   }
 
   public RestData(RestStatus status, T data) {
@@ -106,5 +116,13 @@ public class RestData<T> {
 
   public void setTimeStamp(Long timeStamp) {
     this.timeStamp = timeStamp;
+  }
+
+  public Pagination getPagination() {
+    return pagination;
+  }
+
+  public void setPagination(Pagination pagination) {
+    this.pagination = pagination;
   }
 }

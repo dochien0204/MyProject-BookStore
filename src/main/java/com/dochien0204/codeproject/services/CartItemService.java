@@ -1,4 +1,10 @@
 package com.dochien0204.codeproject.services;
 
+import com.dochien0204.codeproject.entities.Cart;
+
+import java.util.List;
+
 public interface CartItemService {
+    void addBookToCartById(Integer cartId, Integer bookId, Integer quantity);
+    
 }

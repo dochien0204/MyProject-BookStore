@@ -55,4 +55,13 @@ public class UrlConstant {
 
   }
 
+  public static final class Cart {
+
+    public static final String PREFIX = "cart";
+    public static final String LIST = PREFIX + "/list";
+    public static final String USER_CART = PREFIX + "/{userId}/cart-user";
+    public static final  String ADD_CART_FOR_USER = PREFIX + "/{userId}/add-cart";
+    public static final String ADD_BOOK_TO_CART = PREFIX + "/{cartId}/{bookId}/add-book";
+  }
+
 }

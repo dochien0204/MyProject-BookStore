@@ -6,6 +6,8 @@ import com.dochien0204.codeproject.contants.UrlConstant;
 import com.dochien0204.codeproject.dtos.books.CreateNewBookDTO;
 import com.dochien0204.codeproject.dtos.books.GetBookItemDTO;
 import com.dochien0204.codeproject.dtos.books.UpdateBookByIdDTO;
+import com.dochien0204.codeproject.entities.Book;
+import com.dochien0204.codeproject.entities.Pagination;
 import com.dochien0204.codeproject.services.BookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestApiV1
@@ -28,11 +31,13 @@ public class BookController {
   }
 
   @GetMapping(UrlConstant.Book.LIST)
-  public ResponseEntity<?> findAllBook(@RequestParam(name = "pageNo") Integer pageNo,
-                                       @RequestParam(name = "pageSize") Integer pageSize,
-                                       @RequestParam(name = "sortBy", defaultValue = "bookName") String sortBy) {
-    List<GetBookItemDTO> output = bookService.findAllBooks(pageNo, pageSize, sortBy).stream().map(item -> modelMapper.map(item, GetBookItemDTO.class)).collect(Collectors.toList());
-    return VsResponseUtil.ok(output);
+  public ResponseEntity<?> findAllBook(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+                                       @RequestParam(name = "pageSize", defaultValue = "5") Integer pageSize,
+                                       @RequestParam(name = "sortBy", defaultValue = "bookId") String sortBy) {
+    Map<String, Object> result = (Map<String, Object>) bookService.findAllBooks(pageNo, pageSize, sortBy);
+    List<Book> books = (List<Book>) result.get("list");
+    List<GetBookItemDTO> output = books.stream().map(item -> modelMapper.map(item, GetBookItemDTO.class)).collect(Collectors.toList());
+    return VsResponseUtil.ok(output, new Pagination(pageNo, pageSize, sortBy, (Long) result.get("totalNumbers")));
   }
 
   @GetMapping(UrlConstant.Book.GET_BY_ID)
@@ -79,8 +84,10 @@ public class BookController {
                                       @RequestParam(defaultValue = "0") Integer pageNo,
                                       @RequestParam(defaultValue = "5") Integer pageSize,
                                       @RequestParam(defaultValue = "bookName") String sortBy) {
-    List<GetBookItemDTO> output = bookService.findBookByCatalogId(catalogId, pageNo, pageSize, sortBy).stream().map(item -> modelMapper.map(item, GetBookItemDTO.class)).collect(Collectors.toList());
-    return VsResponseUtil.ok(output);
+    Map<String, Object> result = bookService.findBookByCatalogId(catalogId, pageNo, pageSize, sortBy);
+    List<Book> books = (List<Book>) result.get("list");
+    List<GetBookItemDTO> output = books.stream().map(item -> modelMapper.map(item, GetBookItemDTO.class)).collect(Collectors.toList());
+    return VsResponseUtil.ok(output, new Pagination(pageNo, pageSize, sortBy, (Long) result.get("totalNumbers")));
   }
 
   @PostMapping(UrlConstant.Book.CREATE)

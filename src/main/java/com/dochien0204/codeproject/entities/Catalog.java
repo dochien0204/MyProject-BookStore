@@ -1,6 +1,8 @@
 package com.dochien0204.codeproject.entities;
 
 import com.dochien0204.codeproject.entities.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

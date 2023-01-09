@@ -4,6 +4,7 @@ import com.dochien0204.codeproject.dtos.books.CreateNewBookDTO;
 import com.dochien0204.codeproject.dtos.books.UpdateBookByIdDTO;
 import com.dochien0204.codeproject.entities.Book;
 import com.dochien0204.codeproject.entities.Catalog;
+import com.dochien0204.codeproject.entities.Pagination;
 import com.dochien0204.codeproject.exceptions.BadRequestException;
 import com.dochien0204.codeproject.exceptions.NotFoundException;
 import com.dochien0204.codeproject.repositories.BookRepository;
@@ -20,9 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Transactional
@@ -41,15 +40,14 @@ public class BookServiceImpl implements BookService {
 
 
   @Override
-  public List<Book> findAllBooks(Integer pageNo, Integer pageSize, String sortBy) {
+  public Map<String, Object> findAllBooks(Integer pageNo, Integer pageSize, String sortBy) {
     Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
     Page<Book> pagedResult = bookRepository.findAll(paging);
+    Map<String, Object> result = new HashMap<>();
     if (pagedResult.hasContent()) {
-      return pagedResult.getContent();
-    } else {
-      return new ArrayList<Book>();
+      result = addToMap(pagedResult.getTotalElements(), pagedResult.getContent());
     }
-
+    return result;
   }
 
   @Override
@@ -111,17 +109,18 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public List<Book> findBookByCatalogId(Integer catalogId, Integer pageNo, Integer pageSize, String sortBy) {
+  public Map<String,Object> findBookByCatalogId(Integer catalogId, Integer pageNo, Integer pageSize, String sortBy) {
     Optional<Catalog> catalog = catalogRepository.findById(catalogId);
     if (catalog.isEmpty()) {
       throw new NotFoundException("Not Found catalog has ID " + catalogId);
     }
     Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
     Page<Book> pageResult = bookRepository.findBookByCatalog(catalog.get(), paging);
+    Map<String, Object> result = new HashMap<>();
     if (pageResult.hasContent()) {
-      return pageResult.getContent();
+      result = addToMap(pageResult.getTotalElements(), pageResult.getContent());
     }
-    return new ArrayList<Book>();
+    return result;
   }
 
   @Override
@@ -189,5 +188,12 @@ public class BookServiceImpl implements BookService {
       return false;
     }
     return true;
+  }
+
+  public Map<String, Object> addToMap(long totalNumbers, List<Book> list) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("totalNumbers", totalNumbers);
+    map.put("list", list);
+    return map;
   }
 }

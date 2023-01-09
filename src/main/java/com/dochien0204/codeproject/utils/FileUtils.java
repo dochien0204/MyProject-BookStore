@@ -11,9 +11,10 @@ import java.util.Objects;
 
 public class FileUtils {
 
-  private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir") + "\\src\\main\\resources");
+  private static final Path CURRENT_FOLDER = Paths.get(System.getProperty("user.dir") + "/src/main/resources");
 
   public static String uploadFile(MultipartFile multipartFile) throws IOException {
+    System.out.println(CURRENT_FOLDER);
     Path staticPath = Paths.get("static");
     Path imagePath = Paths.get("image");
     if(!Files.exists(CURRENT_FOLDER.resolve(staticPath).resolve(imagePath))) {
@@ -23,6 +24,8 @@ public class FileUtils {
     Path fileImage = CURRENT_FOLDER.resolve(staticPath).resolve(imagePath).resolve(Objects.requireNonNull(multipartFile.getOriginalFilename()));
     try(OutputStream output = Files.newOutputStream(fileImage)) {
       output.write(multipartFile.getBytes());
+      System.out.println("DDax lu");
+      System.out.println(fileImage);
     }
 
     return imagePath.resolve(multipartFile.getOriginalFilename()).toString();

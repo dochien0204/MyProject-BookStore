@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.base;
 
+import com.dochien0204.codeproject.entities.Pagination;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,17 @@ public class VsResponseUtil {
     return new ResponseEntity<>(response, headers, status);
   }
 
+  public static ResponseEntity<RestData<?>> ok(HttpHeaders headers, HttpStatus status, Object data, Pagination pagination) {
+    RestData<?> response = new RestData<>(data, pagination);
+    return new ResponseEntity<>(response, headers, status);
+  }
+
   public static ResponseEntity<RestData<?>> ok(Object data) {
     return ok(null, HttpStatus.OK, data);
+  }
+
+  public static ResponseEntity<RestData<?>> ok(Object data, Pagination pagination) {
+    return ok(null, HttpStatus.OK, data, pagination);
   }
 
   public ResponseEntity<RestData<?>> ok(HttpHeaders headers, Object data) {

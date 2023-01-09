@@ -1,6 +1,8 @@
 package com.dochien0204.codeproject.entities;
 
 import com.dochien0204.codeproject.entities.base.AbstractAuditingEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,10 +38,12 @@ public class Book extends AbstractAuditingEntity {
 
   private String publisher;
 
-  @OneToMany(mappedBy = "book")
+  @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+  @JsonIgnore
   private List<CartItem> cartItems;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "catalog_id")
+  @JsonIgnore
   private Catalog catalog;
 }
