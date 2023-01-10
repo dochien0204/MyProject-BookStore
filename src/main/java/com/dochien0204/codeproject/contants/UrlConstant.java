@@ -64,6 +64,7 @@ public class UrlConstant {
     public static final String ADD_BOOK_TO_CART = PREFIX + "/{cartId}/{bookId}/add-book";
     public static final String EDIT_QUANTITY_OF_CART_ITEM = PREFIX + "/{cartId}/{cartItemId}/edit-cart-item";
     public static final String DELETE_CART_ITEM = PREFIX + "/{cartId}/{cartItemId}/delete-cart-item";
+    public static final String DELETE_ALL_CART_ITEM = PREFIX + "/{cartId}/delete-all-cart-item";
   }
 
 }

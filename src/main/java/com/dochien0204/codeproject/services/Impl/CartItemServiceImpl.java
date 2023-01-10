@@ -66,13 +66,23 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    @Transactional
     public void deleteCartItemById(Integer cartId, Integer cartItemId) {
         if(checkItemExists(cartId, cartItemId)) {
             cartItemRepository.deleteCartItemByCart(cartId, cartItemId);
+            updateCartInformation(cartId);
         } else {
             throw new NotFoundException("Not found cart item " + cartItemId + " in your cart");
         }
+    }
+
+    @Override
+    public void deleteAllCartItemById(Integer cartId) {
+        Optional<Cart> cart = cartRepository.findById(cartId);
+        if(cart.isEmpty()) {
+            throw new NotFoundException("Not found cart " + cart);
+        }
+        cartItemRepository.deleteAllCartItemByCartId(cartId);
+        updateCartInformation(cartId);
     }
 
     public boolean checkItemExists(Integer cartId, Integer cartItemId) {
@@ -88,7 +98,6 @@ public class CartItemServiceImpl implements CartItemService {
         return false;
     }
 
-    @Override
     public void updateCartInformation(Integer cartId) {
         Optional<Cart> cart = cartRepository.findById(cartId);
         int total = 0;

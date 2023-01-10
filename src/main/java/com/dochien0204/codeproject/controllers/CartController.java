@@ -65,7 +65,12 @@ public class CartController {
     public ResponseEntity<?> deleteCartItemFromCart(@PathVariable(name = "cartId") Integer cartId,
                                                     @PathVariable(name = "cartItemId") Integer cartItemId){
         cartItemService.deleteCartItemById(cartId, cartItemId);
-        cartItemService.updateCartInformation(cartId);
         return VsResponseUtil.ok("Delete cart item " + cartItemId + " successfully");
+    }
+
+    @DeleteMapping(UrlConstant.Cart.DELETE_ALL_CART_ITEM)
+    public ResponseEntity<?> deleteAllCartItemByCartId(@PathVariable("cartId") Integer cartId) {
+        cartItemService.deleteAllCartItemById(cartId);
+        return VsResponseUtil.ok("Delete all cart item of cart " + cartId + " successfully");
     }
 }
