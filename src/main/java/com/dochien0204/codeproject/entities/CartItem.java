@@ -29,7 +29,7 @@ public class CartItem extends AbstractAuditingEntity {
   @JsonIgnore
   private Cart cart;
 
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinColumn(name = "book_id")
   private Book book;
 

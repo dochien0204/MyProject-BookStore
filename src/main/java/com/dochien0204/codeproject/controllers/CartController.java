@@ -8,10 +8,7 @@ import com.dochien0204.codeproject.services.CartItemService;
 import com.dochien0204.codeproject.services.CartService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,5 +51,21 @@ public class CartController {
                                            @RequestParam(name = "quantity") Integer quantity) {
         cartItemService.addBookToCartById(cartId, bookId, quantity);
         return VsResponseUtil.ok("Add Book To Cart Successfully");
+    }
+
+    @PatchMapping(UrlConstant.Cart.EDIT_QUANTITY_OF_CART_ITEM)
+    public ResponseEntity<?> editQuantityOfCartItem(@PathVariable(name = "cartId") Integer cartId,
+                                                    @PathVariable(name = "cartItemId") Integer cartItemId,
+                                                    @RequestParam(name = "quantity") Integer quantity) {
+        cartItemService.editCartItemById(cartId, cartItemId, quantity);
+        return VsResponseUtil.ok("Edit Quantity of CartItem " + cartId + "successfully");
+    }
+
+    @DeleteMapping(UrlConstant.Cart.DELETE_CART_ITEM)
+    public ResponseEntity<?> deleteCartItemFromCart(@PathVariable(name = "cartId") Integer cartId,
+                                                    @PathVariable(name = "cartItemId") Integer cartItemId){
+        cartItemService.deleteCartItemById(cartId, cartItemId);
+        cartItemService.updateCartInformation(cartId);
+        return VsResponseUtil.ok("Delete cart item " + cartItemId + " successfully");
     }
 }

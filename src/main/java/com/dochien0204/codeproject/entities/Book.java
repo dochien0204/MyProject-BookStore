@@ -38,7 +38,7 @@ public class Book extends AbstractAuditingEntity {
 
   private String publisher;
 
-  @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JsonIgnore
   private List<CartItem> cartItems;
 
