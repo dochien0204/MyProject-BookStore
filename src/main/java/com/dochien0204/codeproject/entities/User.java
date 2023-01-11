@@ -58,4 +58,8 @@ public class User extends AbstractAuditingEntity {
 
   @OneToOne(mappedBy = "user")
   private PasswordResetToken passwordResetToken;
+
+  @OneToMany(mappedBy = "user")
+  @JsonIgnore
+  private List<Order> orders;
 }
