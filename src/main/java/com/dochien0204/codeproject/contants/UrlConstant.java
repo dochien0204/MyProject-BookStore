@@ -69,7 +69,10 @@ public class UrlConstant {
 
   public static final class OrderProduct {
     public static final String PREFIX = "order-product";
-    public static final String ADD_CART_ITEM_TO_ORDER_PRODUCT = PREFIX + "/{cartItemId}/add-to-op";
+    public static final String LIST = PREFIX + "/list";
+    public static final String ADD_BOOK_ORDER_PRODUCT = PREFIX + "/{cartItemId}/order-by-cart";
+    public static final String ADD_BOOK_TO_ORDER_PRODUCT_DIRECTLY = PREFIX + "/{bookId}/order-direct";
+    public static final String REMOVE_ORDER_PRODUCT = PREFIX + "/{orderProductId}/remove";
   }
 
 }

@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.dtos.books;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,5 @@ public class UpdateBookByIdDTO {
 
   private String publisher;
 
-  @NotNull
   private Integer catalogId;
 }

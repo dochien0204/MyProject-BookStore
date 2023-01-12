@@ -47,7 +47,7 @@ public class Book extends AbstractAuditingEntity {
   @JsonIgnore
   private List<OrderProduct> orderProducts;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "catalog_id")
   @JsonIgnore
   private Catalog catalog;

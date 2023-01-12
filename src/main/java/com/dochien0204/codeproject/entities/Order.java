@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Order {
     private Integer status; //1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH})
+    @JsonIgnore
     private List<OrderProduct> orderProducts;
 
     @ManyToOne(fetch = FetchType.LAZY)

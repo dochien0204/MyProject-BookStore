@@ -24,6 +24,7 @@ public class OrderProduct {
 
     private Integer quantity;
 
+    private float price;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
