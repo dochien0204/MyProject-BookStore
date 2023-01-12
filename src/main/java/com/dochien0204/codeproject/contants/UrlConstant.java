@@ -75,4 +75,10 @@ public class UrlConstant {
     public static final String REMOVE_ORDER_PRODUCT = PREFIX + "/{orderProductId}/remove";
   }
 
+  public static final class Order {
+    public static final String PREFIX = "order";
+    public static final String LIST = PREFIX + "/list";
+    public static final String ADD_ORDER_FOR_USER = PREFIX + "/{userId}/add-order";
+  }
+
 }

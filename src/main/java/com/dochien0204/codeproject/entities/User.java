@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
@@ -52,8 +54,9 @@ public class User extends AbstractAuditingEntity {
   @JsonIgnore
   private Cart cart;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+  @Fetch(value = FetchMode.SUBSELECT)
   private List<Role> roles;
 
   @OneToOne(mappedBy = "user")

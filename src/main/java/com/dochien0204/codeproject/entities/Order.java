@@ -18,9 +18,8 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Integer orderId;
+    private String orderId;
 
     private Long orderDate;
 
@@ -28,13 +27,13 @@ public class Order {
 
     private Long shippedDate;
 
-    private Integer status; //1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped
+    private Integer status; //0:Cancel 1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH})
     @JsonIgnore
     private List<OrderProduct> orderProducts;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 }
