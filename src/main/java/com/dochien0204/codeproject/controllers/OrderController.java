@@ -37,4 +37,23 @@ public class OrderController {
         Order output = orderService.addOrderForUser(userId);
         return VsResponseUtil.ok(output);
     }
+
+    @PostMapping(UrlConstant.Order.ADD_ORDER_PRODUCT_TO_ORDERING)
+    public ResponseEntity<?> addOrderProductToOrdering(@PathVariable(name = "orderId") String orderId,
+                                                       @PathVariable(name = "orderProductId") Integer orderProductId) {
+        orderService.addOrderProductToOrdering(orderId, orderProductId);
+        return VsResponseUtil.ok("Add Order Product " + orderProductId + " to Order " + orderId + " successfully");
+    }
+
+    @GetMapping(UrlConstant.Order.FIND_ORDERS_BY_USER)
+    public ResponseEntity<?> findOrdersByUser(@PathVariable(name = "userId") Integer userId) {
+        List<OrderDTO> output =  orderService.findOrdersByUser(userId).stream().map(item -> modelMapper.map(item, OrderDTO.class)).collect(Collectors.toList());
+        return VsResponseUtil.ok(output);
+    }
+
+    @GetMapping(UrlConstant.Order.FIND_ORDERS_BY_ID)
+    public ResponseEntity<?> findOrderById(@PathVariable(name = "orderId") String orderId) {
+        OrderDTO output = modelMapper.map(orderService.findOrderById(orderId), OrderDTO.class);
+        return VsResponseUtil.ok(output);
+    }
 }

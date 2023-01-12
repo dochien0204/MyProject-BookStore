@@ -1,9 +1,12 @@
 package com.dochien0204.codeproject.dtos.orders;
 
+import com.dochien0204.codeproject.entities.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,4 +25,6 @@ public class OrderDTO {
     private Integer status; //0:Cancel 1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped
 
     private UserDTO user;
+
+    private List<OrderProduct> orderProducts;
 }

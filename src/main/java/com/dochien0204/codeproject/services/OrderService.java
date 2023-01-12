@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface OrderService {
     List<Order> findAllOrder();
+    List<Order> findOrdersByUser(Integer userId);
+    Order findOrderById(String orderId);
     Order addOrderForUser(Integer userId);
     void addOrderProductToOrdering(String orderId, Integer orderProductId);
 

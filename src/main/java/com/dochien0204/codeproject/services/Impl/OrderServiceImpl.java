@@ -1,6 +1,5 @@
 package com.dochien0204.codeproject.services.Impl;
 
-import com.dochien0204.codeproject.contants.UrlConstant;
 import com.dochien0204.codeproject.entities.Order;
 import com.dochien0204.codeproject.entities.OrderProduct;
 import com.dochien0204.codeproject.entities.User;
@@ -35,6 +34,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findOrdersByUser(Integer userId) {
+        if(userRepository.findById(userId).isEmpty()) {
+            throw new NotFoundException("Not found user " + userId);
+        }
+        List<Order> orders = orderRepository.findByUser(userId);
+        return orders;
+    }
+
+    @Override
+    public Order findOrderById(String orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        if(order.isEmpty()) {
+            throw new NotFoundException("Not found order " + orderId);
+        }
+        return order.get();
+    }
+
+    @Override
     public Order addOrderForUser(Integer userId) {
         Optional<User> user = userRepository.findById(userId);
         if(user.isEmpty()) {
@@ -44,6 +61,7 @@ public class OrderServiceImpl implements OrderService {
         UUID orderId = UUID.randomUUID();
         order.setOrderId(orderId.toString());
         order.setUser(user.get());
+        order.setStatus(1);
         orderRepository.save(order);
         return order;
     }
@@ -51,6 +69,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrderProductToOrdering(String orderId, Integer orderProductId) {
         Optional<Order> order = orderRepository.findById(orderId);
+        System.out.println(order.get().getOrderId());
         if(order.isEmpty()) {
             throw new NotFoundException("Not found order " + orderId);
         }
@@ -61,18 +80,13 @@ public class OrderServiceImpl implements OrderService {
         }
 
         Optional<OrderProduct> orderProduct = orderProductRepository.findById(orderProductId);
+        System.out.println(orderProduct.get().getOrderProductId());
         if(orderProduct.isEmpty()) {
             throw new NotFoundException("Not found Order Product " + orderProductId);
         }
 
-        //Get current list order product in order
-        List<OrderProduct> orderProducts = order.get().getOrderProducts();
-        //add new order product to list
-        orderProducts.add(orderProduct.get());
-        //set new list order product to order
-        order.get().setOrderProducts(orderProducts);
-        //set status ordering to order (status: 1)
-        order.get().setStatus(1);
-        orderRepository.save(order.get());
+        //set order for order_product
+        orderProduct.get().setOrder(order.get());
+        orderProductRepository.save(orderProduct.get());
     }
 }

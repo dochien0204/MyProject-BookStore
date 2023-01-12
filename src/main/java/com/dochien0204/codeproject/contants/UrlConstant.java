@@ -79,6 +79,9 @@ public class UrlConstant {
     public static final String PREFIX = "order";
     public static final String LIST = PREFIX + "/list";
     public static final String ADD_ORDER_FOR_USER = PREFIX + "/{userId}/add-order";
+    public static final String ADD_ORDER_PRODUCT_TO_ORDERING = PREFIX + "/{orderId}/{orderProductId}/ordering";
+    public static final String FIND_ORDERS_BY_USER = PREFIX + "/{userId}/find-order-by-user";
+    public static final String FIND_ORDERS_BY_ID = PREFIX + "/{orderId}/find-order-by-id";
   }
 
 }
