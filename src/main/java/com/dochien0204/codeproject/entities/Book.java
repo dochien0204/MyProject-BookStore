@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.List;
@@ -41,6 +42,10 @@ public class Book extends AbstractAuditingEntity {
   @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JsonIgnore
   private List<CartItem> cartItems;
+
+  @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonIgnore
+  private List<OrderProduct> orderProducts;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "catalog_id")

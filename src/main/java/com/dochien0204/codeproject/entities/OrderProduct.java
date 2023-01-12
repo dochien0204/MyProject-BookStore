@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -21,15 +22,14 @@ public class OrderProduct {
     @Column(name = "order_product_id")
     private Integer orderProductId;
 
-    private Integer total;
+    private Integer quantity;
 
-    private float totalPrice;
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cart_item_id")
-    private CartItem cartItem;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 }
