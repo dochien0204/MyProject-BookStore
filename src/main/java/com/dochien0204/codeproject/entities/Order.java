@@ -27,7 +27,7 @@ public class Order {
 
     private Long shippedDate;
 
-    private Integer status; //0:Cancel 1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped
+    private Integer status; //0:Cancel, 1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped
 
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.DETACH})
     @JsonIgnore

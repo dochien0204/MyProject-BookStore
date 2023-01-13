@@ -69,7 +69,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addOrderProductToOrdering(String orderId, Integer orderProductId) {
         Optional<Order> order = orderRepository.findById(orderId);
-        System.out.println(order.get().getOrderId());
         if(order.isEmpty()) {
             throw new NotFoundException("Not found order " + orderId);
         }
@@ -85,8 +84,16 @@ public class OrderServiceImpl implements OrderService {
             throw new NotFoundException("Not found Order Product " + orderProductId);
         }
 
+        //check exists order product in order
+        order.get().getOrderProducts().forEach(item -> {
+            if(item.getOrderProductId() == orderProductId) {
+                throw new BadRequestException("Order Product exists");
+            }
+        });
+
         //set order for order_product
         orderProduct.get().setOrder(order.get());
         orderProductRepository.save(orderProduct.get());
     }
+
 }
