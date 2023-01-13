@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.entities;
 
+import com.dochien0204.codeproject.entities.base.AbstractAuditingEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "cart")
-public class Cart {
+public class Cart extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cartId;

@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.entities;
 
+import com.dochien0204.codeproject.entities.base.AbstractAuditingEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_product")
-public class OrderProduct {
+public class OrderProduct extends AbstractAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

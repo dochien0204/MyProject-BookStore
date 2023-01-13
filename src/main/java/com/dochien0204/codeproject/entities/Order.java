@@ -1,5 +1,6 @@
 package com.dochien0204.codeproject.entities;
 
+import com.dochien0204.codeproject.entities.base.AbstractAuditingEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends AbstractAuditingEntity {
 
     @Id
     @Column(name = "order_id")
