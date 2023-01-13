@@ -17,6 +17,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -75,7 +76,7 @@ public class UserController {
 
   @PermitAll
   @PostMapping(UrlConstant.User.CREATE)
-  public ResponseEntity<?> createNewUser(@ModelAttribute CreateUserDTO userDTO) throws IOException {
+  public ResponseEntity<?> createNewUser(@Valid @ModelAttribute CreateUserDTO userDTO) throws IOException {
     CreateUserResponse response = userService.save(userDTO) ? new CreateUserResponse("Created successfully") : new CreateUserResponse("Created Failed because username is exists");
     return VsResponseUtil.ok(response);
   }

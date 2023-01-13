@@ -50,6 +50,9 @@ public class User extends AbstractAuditingEntity {
 
   private Long lockTime;
 
+  //format:dd-mm-yyyy
+  private String dateOfBirth;
+
   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
   @JsonIgnore
   private Cart cart;

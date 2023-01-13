@@ -27,5 +27,7 @@ public class GetUserByIdDTO {
 
   private String fullName;
 
+  private String dateOfBirth;
+
   private String avatar;
 }

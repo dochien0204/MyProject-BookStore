@@ -39,6 +39,9 @@ public class CreateUserDTO {
   @Nationalized
   private String fullName;
 
+  @NotBlank(message = "Date of Birth is required")
+  private String dateOfBirth;
+
   private MultipartFile file;
 
 }
