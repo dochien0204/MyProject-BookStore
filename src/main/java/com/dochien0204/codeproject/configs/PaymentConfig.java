@@ -5,14 +5,14 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 public class PaymentConfig {
-    public static final String vnp_Version = "2.0.1";
+    public static final String vnp_Version = "2.1.0";
     public static final String vnp_Command = "pay";
     public static final String vnp_TmnCode = "X0AJ3GGE";
     public static final String vnp_CurrCode = "VND";
     public static final String vnp_IpAddr = "0:0:0:0:0:0:0:1";
     public static final String vnp_Locale = "vn";
     public static final String vnp_OrderType = "150000";
-    public static final String vnp_ReturnUrl = "localhost:8080/payment/info-details";
+    public static final String vnp_ReturnUrl = "https://sandbox.vnpayment.vn/tryitnow/Home/VnPayIPN";
     public static final String vnp_HashSecret = "DYCOLKHEQTSDTWFPERNVRVCEGBWXXYRD";
     public static final String vnp_PayUrl = " https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
