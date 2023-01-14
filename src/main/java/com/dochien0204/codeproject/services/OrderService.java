@@ -10,5 +10,9 @@ public interface OrderService {
     Order findOrderById(String orderId);
     Order addOrderForUser(Integer userId);
     void addOrderProductToOrdering(String orderId, Integer orderProductId);
+    void orderedProduct(String orderId);
+    void setOrderShipping(String orderId);
+    void serOrderShipped(String orderId);
+    void cancelOrder(String orderId);
 
 }

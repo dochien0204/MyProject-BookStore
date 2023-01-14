@@ -26,6 +26,8 @@ public class Order extends AbstractAuditingEntity {
 
     private Long requireDate;
 
+    private Long shippingDate;
+
     private Long shippedDate;
 
     private Integer status; //0:Cancel, 1: Ordering, 2: Ordered, 3:Shipping, 4:Shipped

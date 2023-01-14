@@ -96,4 +96,58 @@ public class OrderServiceImpl implements OrderService {
         orderProductRepository.save(orderProduct.get());
     }
 
+    @Override
+    public void orderedProduct(String orderId) {
+        Order order = findOrderById(orderId);
+
+        //check if status is 1 (ordering), set status of order is 2 (ordered)
+        if(order.getStatus() != 1) {
+            throw new BadRequestException("This order is not ordering");
+        }
+        order.setStatus(2);
+        order.setOrderDate(System.currentTimeMillis());
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void setOrderShipping(String orderId) {
+        Order order = findOrderById(orderId);
+
+        //check if order is not ordered
+        if(order.getStatus() != 2) {
+            throw new BadRequestException("You haven't ordered this before");
+        }
+
+        //set status is 3 (shipping)
+        order.setStatus(3);
+        order.setShippingDate(System.currentTimeMillis());
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void serOrderShipped(String orderId) {
+        Order order = findOrderById(orderId);
+        if (order.getStatus() != 3) {
+            throw new BadRequestException("This order is not shipping status!");
+        }
+
+        //set order's status is 4 (shipped)
+        order.setStatus(4);
+        order.setShippedDate(System.currentTimeMillis());
+        orderRepository.save(order);
+    }
+
+    @Override
+    public void cancelOrder(String orderId) {
+        Order order = findOrderById(orderId);
+        if (order.getStatus() != 2) {
+            throw new BadRequestException("This order is shipping now or is shipped");
+        }
+
+        //set order's status is 0 (cancel)
+        order.setStatus(0);
+        order.setRequireDate(System.currentTimeMillis());
+        orderRepository.save(order);
+    }
+
 }

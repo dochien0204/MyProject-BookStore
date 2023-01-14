@@ -9,6 +9,7 @@ import com.dochien0204.codeproject.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -56,4 +57,29 @@ public class OrderController {
         OrderDTO output = modelMapper.map(orderService.findOrderById(orderId), OrderDTO.class);
         return VsResponseUtil.ok(output);
     }
+
+    @PatchMapping(UrlConstant.Order.ORDER_BOOK_BY_ORDER_ID)
+    public ResponseEntity<?> orderBook(@PathVariable(name = "orderId") String orderId) {
+        orderService.orderedProduct(orderId);
+        return VsResponseUtil.ok("Ordered " + orderId + " successfully");
+    }
+
+    @PatchMapping(UrlConstant.Order.SHIPPING_BOOK_BY_ORDER_ID)
+    public ResponseEntity<?> shippingOrder(@PathVariable(name = "orderId") String orderId) {
+        orderService.setOrderShipping(orderId);
+        return VsResponseUtil.ok("Order " + orderId + " is shipping now");
+    }
+
+    @PatchMapping(UrlConstant.Order.SHIPPED_BOOK_BY_ORDER_ID)
+    public ResponseEntity<?> shippedOrdered(@PathVariable(name = "orderId") String orderId) {
+        orderService.serOrderShipped(orderId);
+        return VsResponseUtil.ok("Order " + orderId + " is shipped");
+    }
+
+    @PatchMapping(UrlConstant.Order.CANCEL_ORDER_BY_ORDER_ID)
+    public ResponseEntity<?> cancelOrder(@PathVariable(name = "orderId") String orderId) {
+        orderService.cancelOrder(orderId);
+        return VsResponseUtil.ok("Order " + orderId + " is canceled");
+    }
+
 }

@@ -82,6 +82,10 @@ public class UrlConstant {
     public static final String ADD_ORDER_PRODUCT_TO_ORDERING = PREFIX + "/{orderId}/{orderProductId}/ordering";
     public static final String FIND_ORDERS_BY_USER = PREFIX + "/{userId}/find-order-by-user";
     public static final String FIND_ORDERS_BY_ID = PREFIX + "/{orderId}/find-order-by-id";
+    public static final String ORDER_BOOK_BY_ORDER_ID = PREFIX + "/{orderId}/ordered";
+    public static final String SHIPPING_BOOK_BY_ORDER_ID = PREFIX + "/{orderId}/shipping";
+    public static final String SHIPPED_BOOK_BY_ORDER_ID = PREFIX + "/{orderId}/shipped";
+    public static final String CANCEL_ORDER_BY_ORDER_ID = PREFIX + "/{orderId}/cancel";
   }
 
 }
