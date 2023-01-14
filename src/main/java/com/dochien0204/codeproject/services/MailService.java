@@ -9,4 +9,6 @@ public interface MailService {
   void sendSimpleMailToUser(String to, String subject, String text);
 
   void sendSimpleMessageForAllUser(SimpleMessageForAllDTO messageForAllDTO);
+
+  void sendMailToHappyBirthday(String[] emails);
 }

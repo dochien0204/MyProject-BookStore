@@ -63,4 +63,16 @@ public class MailServiceImpl implements MailService {
     message.setBcc(messageForAllDTO.getEmails());
     mailSender.send(message);
   }
+
+  @Override
+  public void sendMailToHappyBirthday(String[] emails) {
+    SimpleMailMessage message = new SimpleMailMessage();
+    String text = " I wish you full of happiness and love. May all your dreams turn come true and may lady luck visit you everyday. Happy birthday to one of the greatest people I've ever known.";
+    String subject = "HAPPY BIRTHDAY TO YOU";
+    message.setBcc(emails);
+    message.setSubject(subject);
+    message.setText(text);
+    mailSender.send(message);
+  }
+
 }

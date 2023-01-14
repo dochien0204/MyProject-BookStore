@@ -6,6 +6,7 @@ import com.dochien0204.codeproject.services.MailService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -23,17 +24,18 @@ public class UserCronjob {
         this.mailService = mailService;
     }
 
-    @Scheduled(cron = "0 10 01 * * ?")
+    @Scheduled(cron = "0 13 22 * * ?")
     public void sendMailToHappyBirthdayToUser() {
         //get list user
         List<User> users = userRepository.findAll();
-        String text = " I wish you full of happiness and love. May all your dreams turn come true and may lady luck visit you everyday. Happy birthday to one of the greatest people I've ever known.";
         //check day and month of user's birthday
+        List<String> emails = new ArrayList<>();
         users.forEach(user -> {
             if(checkUserBirthday(user)) {
-                mailService.sendSimpleMailToUser(user.getEmail(), "HAPPY BIRTHDAY FROM BOOKSTORE", text);
+                emails.add(user.getEmail());
             }
         });
+        mailService.sendMailToHappyBirthday(emails.toArray(String[]::new));
     }
 
     public boolean checkUserBirthday(User user) {
